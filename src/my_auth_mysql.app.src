@@ -1,0 +1,20 @@
+{application, my_auth_mysql,
+  [{description, "EMQ X Authentication/ACL with MySQL(Demo)"},
+    {vsn, "1.0.0"},
+    {modules, []},
+    {registered, [my_auth_mysql_sup]},
+    {mod, {my_auth_mysql_app, []}},
+    {applications,
+      [
+        kernel,
+        stdlib,
+        mysql,
+        ecpool,
+        emqx_passwd
+      ]},
+    {env, []},
+    {licenses, ["Apache 2.0"]},
+    {links, [{"Homepage", "https://emqx.io/"},
+      {"Github", "https://github.com/emqx/my-auth-mysql"}
+    ]}
+  ]}.
