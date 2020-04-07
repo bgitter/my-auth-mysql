@@ -13,6 +13,7 @@
 
 -include("my_auth_mysql.hrl").
 -include_lib("emqx/include/emqx.hrl").
+-include_lib("emqx/include/logger.hrl").
 
 %% API
 -export([parse_query/1
@@ -40,14 +41,11 @@ parse_query(Sql) ->
 %%--------------------------------------------------------------------
 
 connect(Options) ->
-  io:format("Mysql connect start..."),
-  io:format("Mysql connect Options: ~p~n", [Options]),
+  ?LOG(error, "Mysql connect start... Options: ~p~n", [Options]),
   mysql:start_link(Options).
 
 query(Sql, Params, ClientInfo) ->
-  io:format("Sql: ~p~n", [Sql]),
-  io:format("Params: ~p~n", [Params]),
-  io:format("ClientInfo: ~p~n", [ClientInfo]),
+  ?LOG(error, "Sql: ~p~nParams: ~p~nClientInfo: ~p~n", [Sql, Params, ClientInfo]),
   ecpool:with_client(?APP, fun(C) -> mysql:query(C, Sql, replvar(Params, ClientInfo)) end).
 
 replvar(Params, ClientInfo) ->

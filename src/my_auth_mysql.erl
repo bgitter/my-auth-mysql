@@ -15,12 +15,14 @@
 
 -spec(register_metrics() -> ok).
 register_metrics() ->
+  ?LOG(warn, "Module: [~p] Method: [~p]~n", ["my_auth_mysql", "register_metrics"]),
   lists:foreach(fun emqx_metrics:new/1, ?AUTH_METRICS).
 
 check(ClientInfo = #{password := Password}, AuthResult,
     #{auth_query := {AuthSql, AuthParams},
       super_query := SuperQuery,
       hash_type := HashType}) ->
+  ?LOG(warn, "Module: [~p] Method: [~p]~n", ["my_auth_mysql", "check"]),
   CheckPass = case my_auth_mysql_cli:query(AuthSql, AuthParams, ClientInfo) of
                 {ok, [<<"password">>], [[PassHash]]} ->
                   check_pass({PassHash, Password}, HashType);
@@ -63,6 +65,7 @@ is_superuser({SuperSql, Params}, ClientInfo) ->
   end.
 
 check_pass(Password, HashType) ->
+  ?LOG(warn, "Module: [~p] Method: [~p]~n", ["my_auth_mysql", "check_pass"]),
   case emqx_passwd:check_pass(Password, HashType) of
     ok -> ok;
     {error, _Reason} -> {error, not_authorized}

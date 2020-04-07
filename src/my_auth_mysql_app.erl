@@ -8,6 +8,7 @@
 -behaviour(application).
 
 -include("my_auth_mysql.hrl").
+-include_lib("emqx/include/logger.hrl").
 
 -emqx_plugin(?MODULE).
 
@@ -24,20 +25,20 @@
 %%--------------------------------------------------------------------
 
 start(_StartType, _StartArgs) ->
-  io:format("App start...~n"),
+  ?LOG(error, "App start...~n"),
   {ok, Sup} = my_auth_mysql_sup:start_link(),
   if_enabled(auth_query, fun load_auth_hook/1),
   if_enabled(acl_query, fun load_acl_hook/1),
   {ok, Sup}.
 
 prep_stop(State) ->
-  io:format("App pre_stop...~p~n", [State]),
+  ?LOG(error, "App pre_stop...~p~n", [State]),
   emqx:unhook('client.authenticate', fun my_auth_mysql:check/3),
   emqx:unhook('client.check_acl', fun my_acl_mysql:check_acl/5),
   State.
 
 stop(_State) ->
-  io:format("App stop...~n"),
+  ?LOG(error, "App stop...~n"),
   ok.
 
 load_auth_hook(AuthQuery) ->

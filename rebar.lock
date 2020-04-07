@@ -25,7 +25,7 @@
   1},
  {<<"emqx">>,
   {git,"https://github.com/emqx/emqx",
-       {ref,"e5a6e0dcce193ca1f35b5dbd45ded1b67188b8b1"}},
+       {ref,"d2d939da56404872411a324274e59c72049b649c"}},
   0},
  {<<"emqx_passwd">>,
   {git,"https://github.com/emqx/emqx-passwd",
