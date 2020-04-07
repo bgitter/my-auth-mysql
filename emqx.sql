@@ -10,6 +10,10 @@ CREATE TABLE `mqtt_user` (
   UNIQUE KEY `mqtt_username` (`username`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+--用户默认配置
+INSERT INTO `mqtt_user` ( `username`, `password`, `salt`)
+VALUES ('emqx', 'efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7', NULL);
+
 -- 创建ACL表
 CREATE TABLE `mqtt_acl` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,

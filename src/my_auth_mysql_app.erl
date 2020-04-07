@@ -25,20 +25,20 @@
 %%--------------------------------------------------------------------
 
 start(_StartType, _StartArgs) ->
-  ?LOG(error, "App start...~n"),
+  ?LOG(warning, "App start...~n"),
   {ok, Sup} = my_auth_mysql_sup:start_link(),
   if_enabled(auth_query, fun load_auth_hook/1),
   if_enabled(acl_query, fun load_acl_hook/1),
   {ok, Sup}.
 
 prep_stop(State) ->
-  ?LOG(error, "App pre_stop...~p~n", [State]),
+  ?LOG(warning, "App pre_stop...~p~n", [State]),
   emqx:unhook('client.authenticate', fun my_auth_mysql:check/3),
   emqx:unhook('client.check_acl', fun my_acl_mysql:check_acl/5),
   State.
 
 stop(_State) ->
-  ?LOG(error, "App stop...~n"),
+  ?LOG(warning, "App stop...~n"),
   ok.
 
 load_auth_hook(AuthQuery) ->

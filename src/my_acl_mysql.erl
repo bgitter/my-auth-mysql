@@ -22,11 +22,11 @@
 
 -spec(register_metrics() -> ok).
 register_metrics() ->
-  ?LOG(warn, "Module: [~p] Method: [~p]~n", ["my_acl_mysql", "register_metrics"]),
+  ?LOG(warning, "Module: [~p] Method: [~p]~n", ["my_acl_mysql", "register_metrics"]),
   lists:foreach(fun emqx_metrics:new/1, ?ACL_METRICS).
 
 check_acl(ClientInfo, PubSub, Topic, NoMatchAction, State) ->
-  ?LOG(warn, "Module: [~p] Method: [~p]~n", ["my_acl_mysql", "check_acl"]),
+  ?LOG(warning, "Module: [~p] Method: [~p]~n", ["my_acl_mysql", "check_acl"]),
   case do_check_acl(ClientInfo, PubSub, Topic, NoMatchAction, State) of
     ok -> emqx_metrics:inc(?ACL_METRICS(ignore)), ok;
     {stop, allow} -> emqx_metrics:inc(?ACL_METRICS(allow)), {stop, allow};

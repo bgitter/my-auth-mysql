@@ -41,11 +41,11 @@ parse_query(Sql) ->
 %%--------------------------------------------------------------------
 
 connect(Options) ->
-  ?LOG(error, "Mysql connect start... Options: ~p~n", [Options]),
+  ?LOG(warning, "Mysql connect start... Options: ~p~n", [Options]),
   mysql:start_link(Options).
 
 query(Sql, Params, ClientInfo) ->
-  ?LOG(error, "Sql: ~p~nParams: ~p~nClientInfo: ~p~n", [Sql, Params, ClientInfo]),
+  ?LOG(warning, "Sql: ~p~nParams: ~p~nClientInfo: ~p~n", [Sql, Params, ClientInfo]),
   ecpool:with_client(?APP, fun(C) -> mysql:query(C, Sql, replvar(Params, ClientInfo)) end).
 
 replvar(Params, ClientInfo) ->

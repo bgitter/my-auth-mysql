@@ -16,7 +16,7 @@
 -export([init/1]).
 
 start_link() ->
-  ?LOG(error, "Supervisor start_link exec...~n"),
+  ?LOG(warning, "Supervisor start_link exec...~n"),
   supervisor:start_link({local, ?MODULE}, ?MODULE, []).
 
 %% sup_flags() = #{strategy => strategy(),         % optional
@@ -30,6 +30,6 @@ start_link() ->
 %%                  modules => modules()}   % optional
 init([]) ->
   {ok, Server} = application:get_env(?APP, server),
-  ?LOG(error, "Supervisor init exec, Server Info: ~p~n", [Server]),
+  ?LOG(warning, "Supervisor init exec, Server Info: ~p~n", [Server]),
   PoolSpec = ecpool:pool_spec(?APP, ?APP, my_auth_mysql_cli, Server),
   {ok, {{one_for_one, 10, 100}, [PoolSpec]}}.
